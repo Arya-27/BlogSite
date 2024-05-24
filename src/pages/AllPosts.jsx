@@ -7,9 +7,9 @@ function AllPosts() {
     useEffect(() => {}, [])
     appwriteService.getPosts([]).then((posts) => {
         if (posts) {
-            setPosts(posts.documents)
+            setPosts(posts.documents);
         }
-    })
+    });
   return (
     <div className='w-full py-8'>
         <Container>
@@ -25,4 +25,4 @@ function AllPosts() {
   )
 }
 
-export default AllPosts
+export default AllPosts;

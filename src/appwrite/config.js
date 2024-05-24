@@ -15,6 +15,7 @@ export class Service{
     }
 
     async createPost({title, slug, content, featuredImage, status, userId}){
+        
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -27,9 +28,9 @@ export class Service{
                     status,
                     userId,
                 }
-            )
+            );
         } catch (error) {
-            console.log("Appwrite service :: createPost :: error", error);
+            console.log("Appwrite service :: CreatePost :: error", error);
         }
     }
 
