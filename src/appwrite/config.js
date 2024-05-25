@@ -15,7 +15,6 @@ export class Service{
     }
 
     async createPost({title, slug, content, featuredImage, status, userId}){
-        
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -28,9 +27,9 @@ export class Service{
                     status,
                     userId,
                 }
-            );
+            )
         } catch (error) {
-            console.log("Appwrite service :: CreatePost :: error", error);
+            console.log("Appwrite serive :: createPost :: error", error);
         }
     }
 
@@ -49,7 +48,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            console.log("Appwrite service :: updatePost :: error", error);
+            console.log("Appwrite serive :: updatePost :: error", error);
         }
     }
 
@@ -63,7 +62,7 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("Appwrite service :: deletePost :: error", error);
+            console.log("Appwrite serive :: deletePost :: error", error);
             return false
         }
     }
@@ -77,7 +76,7 @@ export class Service{
             
             )
         } catch (error) {
-            console.log("Appwrite service :: getPost :: error", error);
+            console.log("Appwrite serive :: getPost :: error", error);
             return false
         }
     }
@@ -92,7 +91,7 @@ export class Service{
 
             )
         } catch (error) {
-            console.log("Appwrite servicee :: getPosts :: error", error);
+            console.log("Appwrite serive :: getPosts :: error", error);
             return false
         }
     }
@@ -107,7 +106,7 @@ export class Service{
                 file
             )
         } catch (error) {
-            console.log("Appwrite service :: uploadFile :: error", error);
+            console.log("Appwrite serive :: uploadFile :: error", error);
             return false
         }
     }
@@ -120,7 +119,7 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("Appwrite service :: deleteFile :: error", error);
+            console.log("Appwrite serive :: deleteFile :: error", error);
             return false
         }
     }
