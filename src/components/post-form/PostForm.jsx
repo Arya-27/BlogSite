@@ -19,33 +19,38 @@ export default function PostForm({ post }) {
     const userData = useSelector((state) => state.auth.userData);
 
     const submit = async (data) => {
-        if (post) {
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
-
-            if (file) {
-                appwriteService.deleteFile(post.featuredImage);
-            }
-
-            const dbPost = await appwriteService.updatePost(post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined,
-            });
-
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
-        } else {
-            const file = await appwriteService.uploadFile(data.image[0]);
-
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
-
-                if (dbPost) {
-                    navigate(`/post/${dbPost.$id}`);
+        try {
+            let fileId;
+            if (data.image && data.image[0]) {
+                const file = await appwriteService.uploadFile(data.image[0]);
+                fileId = file.$id;
+                if (post && post.featuredImage) {
+                    await appwriteService.deleteFile(post.featuredImage);
                 }
             }
+
+            if (post) {
+                const updatedPost = await appwriteService.updatePost(post.$id, {
+                    ...data,
+                    featuredImage: fileId || post.featuredImage,
+                });
+
+                if (updatedPost) {
+                    navigate(`/post/${updatedPost.$id}`);
+                }
+            } else {
+                const newPost = await appwriteService.createPost({ 
+                    ...data, 
+                    featuredImage: fileId, 
+                    userId: userData.$id 
+                });
+
+                if (newPost) {
+                    navigate(`/post/${newPost.$id}`);
+                }
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
         }
     };
 
@@ -54,8 +59,8 @@ export default function PostForm({ post }) {
             return value
                 .trim()
                 .toLowerCase()
-                .replace(/[^a-zA-Z\d\s]+/g, "-")
-                .replace(/\s/g, "-");
+                .replace(/[^a-zA-Z\d\s]+/g, "")
+                .replace(/\s+/g, "-");
 
         return "";
     }, []);
@@ -98,7 +103,7 @@ export default function PostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
-                {post && (
+                {post && post.featuredImage && (
                     <div className="w-full mb-4">
                         <img
                             src={appwriteService.getFilePreview(post.featuredImage)}
