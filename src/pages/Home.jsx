@@ -20,7 +20,7 @@ function Home() {
             <div className="mt-40 flex items-center justify-center p-2  w-full">
               <div>
               <h1 className='font-mono text-4xl font-bold hover:text-gray-400'>
-                                Welcome to BloggingSite.
+                                Welcome to IdeaNest.
             </h1><br/>
               <h3 className="text-2xl font-bold p-16 hover:text-gray-500 ">
                 Login to read any post or post one of your own!
