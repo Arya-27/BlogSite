@@ -23,3 +23,7 @@ Additionally, IdeaNest facilitates smooth document sharing among team members, b
 - REACT
 - Tailwind CSS
 - Javascript
+
+# BACKEND
+
+- Appwrite
